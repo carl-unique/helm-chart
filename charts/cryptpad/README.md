@@ -88,6 +88,11 @@ application_config:
 | config.verbose | bool | `false` | Enable verbose logging |
 | cpadConfig | string | `"/cryptpad/config/config.js"` | File to mount for the CPAD Configuration (`CPAD_CONF`) |
 | enableEmbedding | bool | `false` | Allow documents and media be embedded on other websites. This will add an "Embed" option on the Share menu. |
+| extraContainers | list | `[]` | Additional sidecar containers. Rendered into `.spec.template.spec.containers` after the main container. |
+| extraEnv | list | `[]` | Additional environment variables for the main container (raw env entries, supports valueFrom). |
+| extraInitContainers | list | `[]` | Additional init containers (e.g. clone a plugin into a shared volume). Rendered into `.spec.template.spec.initContainers` after the built-in init container. |
+| extraVolumeMounts | list | `[]` | Additional volume mounts for the main container. |
+| extraVolumes | list | `[]` | Additional volumes for the pod. Rendered into `.spec.template.spec.volumes`. |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"cryptpad/cryptpad"` |  |
