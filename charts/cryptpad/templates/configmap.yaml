@@ -50,6 +50,8 @@ data:
             {{- if and (ne $key "httpUnsafeOrigin") (ne $key "httpSafeOrigin") (ne $key "adminKeys") }}
               {{- if or (kindIs "bool" $value) (kindIs "float64" $value) (kindIs "int64" $value) }}
               {{ $key }}: {{ $value }},
+              {{- else if or (kindIs "slice" $value) (kindIs "map" $value) }}
+              {{ $key }}: {{ $value | toJson }},
               {{- else }}
               {{ $key }}: {{ $value | quote }},
               {{- end }}
