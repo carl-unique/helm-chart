@@ -19,9 +19,19 @@ data:
           {{- end}}
        
           {{- if .Values.ingress.enabled }}
+            {{- if .Values.ingress.sandboxHost }}
+            httpSafeOrigin: 'https://{{ .Values.ingress.sandboxHost }}',
+            {{- else }}
             httpSafeOrigin: 'https://{{ (index .Values.ingress.hosts 0).host }}',
-          {{- else if .Values.config.httpSafeOrigin }}  
-            httpSafeOrigin: {{ .Values.config.httpSafeOrigin | quote }}, 
+            {{- end }}
+          {{- else if .Values.httpRoute.enabled }}
+            {{- if .Values.httpRoute.sandboxHost }}
+            httpSafeOrigin: 'https://{{ .Values.httpRoute.sandboxHost }}',
+            {{- else }}
+            httpSafeOrigin: 'https://{{ index .Values.httpRoute.hosts 0 }}',
+            {{- end }}
+          {{- else if .Values.config.httpSafeOrigin }}
+            httpSafeOrigin: {{ .Values.config.httpSafeOrigin | quote }},
           {{- else }}
             httpSafeOrigin: 'http://localhost:3000',
           {{- end}}

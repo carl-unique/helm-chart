@@ -47,4 +47,23 @@ spec:
                 port:
                   number: {{ $svcWsPort }}
     {{- end }}
+    {{- if .Values.ingress.sandboxHost }}
+    - host: {{ .Values.ingress.sandboxHost | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          - path: /cryptpad_websocket
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcWsPort }}
+    {{- end }}
 {{- end }}

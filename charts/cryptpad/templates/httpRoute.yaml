@@ -21,9 +21,10 @@ spec:
   parentRefs:
   {{- . | toYaml | nindent 2 }}
   {{- end }}
-  {{- with .Values.httpRoute.hosts }}
   hostnames:
-  {{- toYaml . | nindent 2 }}
+  {{- toYaml .Values.httpRoute.hosts | nindent 2 }}
+  {{- if .Values.httpRoute.sandboxHost }}
+  - {{ .Values.httpRoute.sandboxHost | quote }}
   {{- end }}
   rules:
   - matches:

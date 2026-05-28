@@ -75,11 +75,22 @@ http://localhost:3000
 {{- end }}
 
 {{/*
-Define sandbox subdomain. Or use first ingress host defined as main domain.
+Define sandbox domain (httpSafeOrigin). Uses ingress.sandboxHost or httpRoute.sandboxHost when set,
+falling back to the main host only as a last resort (which is insecure for CryptPad).
 */}}
 {{- define "cryptpad-helm.sandboxDomain" -}}
 {{- if .Values.ingress.enabled }}
+{{- if .Values.ingress.sandboxHost }}
+https://{{ .Values.ingress.sandboxHost }}
+{{- else }}
 https://{{ (index .Values.ingress.hosts 0).host }}
+{{- end }}
+{{- else if .Values.httpRoute.enabled }}
+{{- if .Values.httpRoute.sandboxHost }}
+https://{{ .Values.httpRoute.sandboxHost }}
+{{- else }}
+https://{{ index .Values.httpRoute.hosts 0 }}
+{{- end }}
 {{- else if .Values.config.httpSafeOrigin }}
 {{- .Values.config.httpSafeOrigin }}
 {{- else }}
