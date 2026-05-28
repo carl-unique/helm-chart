@@ -202,6 +202,21 @@ ingress:
   tls: []
   #  - secretName: secret-tls
 
+httpRoute:
+  enabled: false
+  annotations: {}
+  labels: {}
+  parentRefs: []
+  # -- requires cluster enabled default gateway (here envoy as example)
+  #- name: default-gateway
+  #  namespace: infrastructure-envoy-gateway-default
+  #  sectionName: default
+  hosts:
+  - localhost
+  timeouts: {}
+    # backendRequest: 120s
+
+
 # -- Specify default resources.
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
