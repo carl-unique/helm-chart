@@ -195,8 +195,13 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    # if the ingress is enabled, this hostname will be used for httpUnsafeOrigin and httpSafeOrigin
+    # if the ingress is enabled, this hostname will be used for httpUnsafeOrigin
     - host: localhost
+  # -- Separate origin for the CryptPad sandbox iframe (httpSafeOrigin).
+  # CryptPad requires this to be a *different* domain or subdomain from the main host
+  # for security isolation. If left empty, the main host is reused (insecure).
+  # Example: sandbox.cryptpad.example.org
+  sandboxHost: ""
   tls: []
   #  - secretName: secret-tls
 
@@ -211,6 +216,9 @@ httpRoute:
   #  sectionName: default
   hosts:
   - localhost
+  # -- Separate origin for the CryptPad sandbox iframe (httpSafeOrigin).
+  # Must be a different domain or subdomain from the main host. If empty, main host is reused.
+  sandboxHost: ""
   timeouts: {}
     # backendRequest: 120s
 
