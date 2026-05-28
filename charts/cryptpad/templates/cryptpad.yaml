@@ -148,8 +148,15 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           {{- range $dir, $dirvalues := .Values.persistence.cryptpad }}
+            {{- $mountPath := printf "/cryptpad/%s" $dir }}
+            {{- $skip := false }}
+            {{- range $.Values.extraVolumeMounts }}
+              {{- if eq .mountPath $mountPath }}{{- $skip = true }}{{- end }}
+            {{- end }}
+            {{- if not $skip }}
             - name: cryptpad-{{ $dir | replace "/" "-" }}
-              mountPath: /cryptpad/{{ $dir }}
+              mountPath: {{ $mountPath }}
+            {{- end }}
           {{- end }}
             - name: configmaps
               mountPath: {{ .Values.cpadConfig }}
@@ -232,7 +239,14 @@ spec:
     {{- end }}
   {{- else }}
     {{- range $dir, $dirvalues := .Values.persistence.cryptpad }}
-        - name: cryptpad-{{ $dir | replace "/" "-" }}
+      {{- $volName := printf "cryptpad-%s" ($dir | replace "/" "-") }}
+      {{- $skip := false }}
+      {{- range $.Values.extraVolumes }}
+        {{- if eq .name $volName }}{{- $skip = true }}{{- end }}
+      {{- end }}
+      {{- if not $skip }}
+        - name: {{ $volName }}
           emptyDir: {}
-  {{- end }}
+      {{- end }}
+    {{- end }}
 {{- end }}
