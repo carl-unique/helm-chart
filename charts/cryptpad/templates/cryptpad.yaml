@@ -50,6 +50,8 @@ spec:
           volumeMounts:
             - name: cryptpad-data
               mountPath: /cryptpad/data
+            - mountPath: /tmp
+              name: tmp
           args:
             - |
               FILE=/cryptpad/data/decrees/decree.ndjson
@@ -164,6 +166,8 @@ spec:
             - name: configmaps
               mountPath: /cryptpad/customize/application_config.js
               subPath: application_config.js
+            - mountPath: /tmp
+              name: tmp
             {{- with .Values.extraVolumeMounts }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -183,6 +187,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: tmp
+          emptyDir: {}
         - name: configmaps
           configMap:
             name: {{ include "cryptpad-helm.fullname" . }}
