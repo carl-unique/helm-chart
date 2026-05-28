@@ -42,12 +42,14 @@ data:
           {{- end}}
 
           {{- range $key, $value := .Values.config }}
-            {{- if and (or (ne $key "httpUnsafeOrigin") (ne $key "httpSafeOrigin")) (ne $key "adminKeys")  (ne $key "maxUploadSize")}}
-            {{ $key }}: {{ $value | quote }},
+            {{- if and (ne $key "httpUnsafeOrigin") (ne $key "httpSafeOrigin") (ne $key "adminKeys") (ne $key "maxUploadSize") }}
+              {{- if or (kindIs "bool" $value) (kindIs "float64" $value) (kindIs "int64" $value) }}
+              {{ $key }}: {{ $value }},
+              {{- else }}
+              {{ $key }}: {{ $value | quote }},
+              {{- end }}
             {{- end }}
           {{- end }}
-
-
         };
   application_config.js: |
     /*
