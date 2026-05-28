@@ -1,8 +1,8 @@
+---
+apiVersion: apps/v1
 {{- if .Values.workloadStateful }}
-apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
 kind: StatefulSet
 {{- else }}
-apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 {{- end }}
 metadata:
