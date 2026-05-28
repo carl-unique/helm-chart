@@ -62,11 +62,11 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Define main domain. Or use first ingress host defined as main domain.
+Define main domain (httpUnsafeOrigin / CPAD_MAIN_DOMAIN).
 */}}
 {{- define "cryptpad-helm.mainDomain" -}}
-{{- if .Values.ingress.enabled }}
-https://{{ (index .Values.ingress.hosts 0).host }}
+{{- if .Values.mainDomain }}
+https://{{ .Values.mainDomain }}
 {{- else if .Values.config.httpUnsafeOrigin }}
 {{- .Values.config.httpUnsafeOrigin }}
 {{- else }}
@@ -75,22 +75,14 @@ http://localhost:3000
 {{- end }}
 
 {{/*
-Define sandbox domain (httpSafeOrigin). Uses ingress.sandboxHost or httpRoute.sandboxHost when set,
-falling back to the main host only as a last resort (which is insecure for CryptPad).
+Define sandbox domain (httpSafeOrigin / CPAD_SANDBOX_DOMAIN).
+Falls back to mainDomain when sandboxDomain is unset (insecure — same origin).
 */}}
 {{- define "cryptpad-helm.sandboxDomain" -}}
-{{- if .Values.ingress.enabled }}
-{{- if .Values.ingress.sandboxHost }}
-https://{{ .Values.ingress.sandboxHost }}
-{{- else }}
-https://{{ (index .Values.ingress.hosts 0).host }}
-{{- end }}
-{{- else if .Values.httpRoute.enabled }}
-{{- if .Values.httpRoute.sandboxHost }}
-https://{{ .Values.httpRoute.sandboxHost }}
-{{- else }}
-https://{{ index .Values.httpRoute.hosts 0 }}
-{{- end }}
+{{- if .Values.sandboxDomain }}
+https://{{ .Values.sandboxDomain }}
+{{- else if .Values.mainDomain }}
+https://{{ .Values.mainDomain }}
 {{- else if .Values.config.httpSafeOrigin }}
 {{- .Values.config.httpSafeOrigin }}
 {{- else }}
