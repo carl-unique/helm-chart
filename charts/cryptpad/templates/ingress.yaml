@@ -2,6 +2,7 @@
 {{- $fullName := include "cryptpad-helm.fullname" . -}}
 {{- $svcPort := .Values.service.externalPort -}}
 {{- $svcWsPort := .Values.service.websocket.externalPort -}}
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
