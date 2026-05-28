@@ -22,9 +22,9 @@ spec:
   {{- . | toYaml | nindent 2 }}
   {{- end }}
   hostnames:
-  {{- toYaml .Values.httpRoute.hosts | nindent 2 }}
-  {{- if .Values.httpRoute.sandboxHost }}
-  - {{ .Values.httpRoute.sandboxHost | quote }}
+  - {{ .Values.mainDomain | quote }}
+  {{- if .Values.sandboxDomain }}
+  - {{ .Values.sandboxDomain | quote }}
   {{- end }}
   rules:
   - matches:
