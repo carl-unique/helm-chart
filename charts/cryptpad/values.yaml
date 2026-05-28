@@ -240,7 +240,8 @@ autoscaling:
   # -- Minimal numbers of replicas
   minReplicas: 1
   # -- Maximum numbers of replicas
-  maxReplicas: 100
+  # TODO: does cryptpad support HA?
+  maxReplicas: 1
   # -- Percentage of the targeted CPU Utilization
   targetCPUUtilizationPercentage: 80
   # -- Percentage of the targeted Memory Utilization
