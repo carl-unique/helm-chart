@@ -147,16 +147,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          {{- if .Values.persistence.enabled }}
           {{- range $dir, $dirvalues := .Values.persistence.cryptpad }}
             - name: cryptpad-{{ $dir | replace "/" "-" }}
               mountPath: /cryptpad/{{ $dir }}
-          {{- end }}
-          {{- else if not .Values.workloadStateful }}
-          {{- range $dir, $dirvalues := .Values.persistence.cryptpad }}
-            - name: cryptpad-{{ $dir | replace "/" "-" }}
-              mountPath: /cryptpad/{{ $dir }}
-          {{- end }}
           {{- end }}
             - name: configmaps
               mountPath: {{ .Values.cpadConfig }}
