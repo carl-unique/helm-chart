@@ -210,7 +210,6 @@ ingress:
 httpRoute:
   enabled: false
   annotations: {}
-  labels: {}
   parentRefs: []
   # -- requires cluster enabled default gateway (here envoy as example)
   #- name: default-gateway
