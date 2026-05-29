@@ -87,6 +87,7 @@ application_config:
 | config.taskPath | string | `"./data/tasks"` | Directory to store a list of scheduled tasks. |
 | config.verbose | bool | `false` | Enable verbose logging |
 | cpadConfig | string | `"/cryptpad/config/config.js"` | File to mount for the CPAD Configuration (`CPAD_CONF`) |
+| deployment | object | `{}` | Ability to annotate the Deployment/Statefullset with annotations like a configmap reloader deployment:   annotations:     reloader.stakater.com/auto: "true" |
 | enableEmbedding | bool | `false` | Allow documents and media be embedded on other websites. This will add an "Embed" option on the Share menu. |
 | extraContainers | list | `[]` | Additional sidecar containers. Rendered into `.spec.template.spec.containers` after the main container. |
 | extraEnv | list | `[]` | Additional environment variables for the main container (raw env entries, supports valueFrom). |
