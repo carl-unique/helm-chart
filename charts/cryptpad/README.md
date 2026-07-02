@@ -83,6 +83,7 @@ application_config:
 | config.logLevel | string | `"info"` | Change log level from this list below by order of importance: (silly, verbose, debug, feedback, info, warn, error). |
 | config.logPath | string | `"./data/logs"` | Directory to store logging events. |
 | config.logToStdout | bool | `false` | Log activity to stdout, this may be useful for debugging |
+| config.maxUploadSize | string | `"20 * 1024 * 1024"` | URL to reach your cryptpad httpSafeOrigin: 'https://cryptpad.example.org' |
 | config.pinPath | string | `"./data/pins"` | Directory to store documents that was pinned to to be stored by the server indefinitely. |
 | config.taskPath | string | `"./data/tasks"` | Directory to store a list of scheduled tasks. |
 | config.verbose | bool | `false` | Enable verbose logging |
